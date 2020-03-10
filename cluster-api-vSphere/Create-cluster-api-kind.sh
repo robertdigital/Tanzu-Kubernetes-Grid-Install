@@ -4,17 +4,14 @@ unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     #Install Lind on Linux
 	curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.6.1/kind-linux-amd64
-	chmod +x ./kind
-	sudo mv ./kind /usr/local/bin/kind
 	;;
     Darwin*)    #Install Kind on macOs
 	curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.6.1/kind-darwin-amd64
-	chmod +x ./kind
-	sudo mv ./kind /usr/local/bin/kind
 	;;
 esac
 
-
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
 
 # Create a tkg cluster
 
@@ -48,18 +45,18 @@ chmod +x kind-image.sh
  EOF
 
 
-kind delete cluster --name kind-tanzu
+kind delete cluster --name tanzu-kind
 
 # Launch the cluster
 kind create cluster \
-    --name tanzu \
+    --name tanzu-kind \
     --image tanzu-node:v1.16.2 \
     --config tanzu-kind.yaml \
     --wait 60s
 
 
 # cluster-info
-kubectl cluster-info --context kind-tanzu
+kubectl cluster-info --context tanzu-kind
 
 kubectl get nodes -o wide
 

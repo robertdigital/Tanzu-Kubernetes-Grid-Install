@@ -1,14 +1,19 @@
 #!/bin/bash
 
-#Install Kind on macOs
-curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.6.1/kind-darwin-amd64
-chmod +x ./kind
-sudo mv ./kind /usr/local/bin/kind
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     #Install Lind on Linux
+	curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.6.1/kind-linux-amd64
+	chmod +x ./kind
+	sudo mv ./kind /usr/local/bin/kind
+	;;
+    Darwin*)    #Install Kind on macOs
+	curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.6.1/kind-darwin-amd64
+	chmod +x ./kind
+	sudo mv ./kind /usr/local/bin/kind
+	;;
+esac
 
-#Install Kind on Linux
-curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v0.6.1/kind-darwin-amd64
-chmod +x ./kind
-sudo mv ./kind /usr/local/bin/kind
 
 
 # Create a tkg cluster
